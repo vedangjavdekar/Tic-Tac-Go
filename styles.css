@@ -8,7 +8,7 @@
 
 @font-face {
 	font-family: Megrim;
-	src: url("./dist/Assets/Fonts/Megrim-Regular.ttf");
+	src: url("https://fonts.googleapis.com/css2?family=Megrim&display=swap");
 	font-weight: normal;
 }
 .fontLoader {
