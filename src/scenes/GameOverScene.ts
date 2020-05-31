@@ -27,6 +27,7 @@ export default class GameOverScene extends Phaser.Scene {
 				PLAYER_PARAMS.HIGH_SCORE_KEY,
 				this.score.toString()
 			);
+			this.highScore = this.score;
 		}
 	}
 
