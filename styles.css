@@ -7,10 +7,12 @@
 /* if using custom fonts uncomment the following */
 
 @font-face {
-	font-family: Megrim;
-	src: url("https://fonts.googleapis.com/css2?family=Megrim&display=swap");
-	font-weight: normal;
+	font-family: "Megrim";
+	src: url("./dist/Fonts/Megrim.woff") format("woff");
+	font-weight: 500;
+	font-style: normal;
 }
+
 .fontLoader {
 	position: absolute;
 	left: -1000px;
