@@ -1,0 +1,20 @@
+* {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+@font-face {
+	font-family: Megrim;
+	src: url(../Assets/Fonts/Megrim-Regular.ttf);
+	font-weight: 500;
+	font-style: normal;
+}
+.fontLoader {
+	position: absolute;
+	left: -1000px;
+	visibility: hidden;
+}
+body {
+	background-color: #232323;
+}
+/*# sourceMappingURL=/styles.dfb9fac1.css.map */

@@ -39,7 +39,7 @@ export default class GameOverScene extends Phaser.Scene {
 
 		this.add
 			.text(width / 2, height / 6, "Game Over", {
-				font: `${getFontSize(64)}px Megrim`,
+				font: `${getFontSize(56)}px Megrim`,
 				fill: "#fff",
 			})
 			.setOrigin(0.5);
@@ -80,7 +80,7 @@ export default class GameOverScene extends Phaser.Scene {
 			width / 2,
 			(3.5 * height) / 4,
 			"Play Again",
-			48,
+			36,
 			true,
 			true,
 			() => {

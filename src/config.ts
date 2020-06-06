@@ -4,14 +4,13 @@ import GameScene from "./scenes/GameScene";
 import UIScene from "./scenes/UIScene";
 import GameOverScene from "./scenes/GameOverScene";
 import Tutorial from "./scenes/Tutorial";
+import BootScene from "./scenes/BootScene";
 
 export const config = {
 	type: Phaser.AUTO,
 	backgroundColor: "#161616",
-	width: 360,
-	height: 640,
-	parent: "phaser-app",
-	antialias: false,
+	width: 1080,
+	height: 1920,
 	scale: {
 		mode: Phaser.Scale.FIT,
 		autoCenter: Phaser.Scale.CENTER_BOTH,
@@ -25,10 +24,19 @@ export const config = {
 			},
 		},
 	},
-	scene: [LoadScene, MenuScene, Tutorial, GameScene, UIScene, GameOverScene],
+	scene: [
+		BootScene,
+		LoadScene,
+		MenuScene,
+		Tutorial,
+		GameScene,
+		UIScene,
+		GameOverScene,
+	],
 };
 
 export enum SCENES {
+	BOOT = "BOOT",
 	LOAD = "LOAD",
 	MENU = "MENU",
 	TUTORIAL = "TUTORIAL",
@@ -43,7 +51,7 @@ export const PLAYER_PARAMS = {
 
 export const DEFAULT_FONT_SIZE = 36;
 export const getFontSize = (size: number): number => {
-	return Math.round(size * LoadScene.scaleFactor);
+	return Math.round(size * BootScene.scaleFactor);
 };
 
 export type eventCallback = (...args: any[]) => void;

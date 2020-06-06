@@ -3,14 +3,21 @@ import GameEventEmitter, { GAME_EVENTS } from "../classes/GameEvents";
 import WallItem from "../classes/WallItem";
 import Player from "../classes/Player";
 import Hole from "../classes/Hole";
+import BootScene from "./BootScene";
 
 const DEFAULT_REDUCE_ITR = 5;
+const DEAFAULT_SOUND_RATE_INC = 0.01;
 
-const DEFAULT_GRID_SIZE = 70;
-const DEFAULT_GRID_MARGIN = 10;
+const DEFAULT_GRID_SIZE = 180 * BootScene.scaleFactor;
+const DEFAULT_GRID_MARGIN = 50 * BootScene.scaleFactor;
+const DEFAULT_WALL_VELOCITY = 600;
 
 export type Point = { x: number; y: number };
 export default class GameScene extends Phaser.Scene {
+	//sounds
+	sound_normal: Phaser.Sound.BaseSound;
+	sound_bonus: Phaser.Sound.BaseSound;
+
 	//event emitter singleton instance
 	eventEmitter: GameEventEmitter;
 
@@ -51,6 +58,9 @@ export default class GameScene extends Phaser.Scene {
 		this.canStartGame = false;
 		this.wavesQueue = [];
 		this.delayReducerCounter = 0;
+
+		this.sound_normal = this.sound.add("normal");
+		this.sound_bonus = this.sound.add("bonus");
 	}
 
 	create() {
@@ -118,6 +128,8 @@ export default class GameScene extends Phaser.Scene {
 			this.player,
 			this.wallObjects,
 			(player: Player, wall: WallItem) => {
+				this.sound.remove(this.sound_normal);
+				this.sound.remove(this.sound_bonus);
 				this.physics.world.pause();
 				this.spawnTimer.paused = true;
 				this.canStartGame = false;
@@ -168,6 +180,11 @@ export default class GameScene extends Phaser.Scene {
 			}
 		}
 		if (scoreToAdd > 0) {
+			if (scoreToAdd === 10) {
+				this.sound_bonus.play();
+			} else {
+				this.sound_normal.play();
+			}
 			this.eventEmitter.emit(GAME_EVENTS.addScore, scoreToAdd);
 		}
 	}
@@ -214,7 +231,7 @@ export default class GameScene extends Phaser.Scene {
 				const holeObj = this.addHole(i, (-3 * h) / 8);
 				if (holeObj) {
 					(holeObj.body as Phaser.Physics.Arcade.Body).setVelocityY(
-						200
+						DEFAULT_WALL_VELOCITY
 					);
 				}
 				wave.push(-1);
@@ -224,7 +241,9 @@ export default class GameScene extends Phaser.Scene {
 			if (wall) {
 				const isCross = Phaser.Math.Between(0, 100) % 2;
 				wall.changeSymbol(isCross == 1);
-				(wall.body as Phaser.Physics.Arcade.Body).setVelocityY(200);
+				(wall.body as Phaser.Physics.Arcade.Body).setVelocityY(
+					DEFAULT_WALL_VELOCITY
+				);
 				wave.push(isCross);
 			}
 		}

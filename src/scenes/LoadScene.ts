@@ -1,16 +1,12 @@
 import { SCENES, config, DEFAULT_FONT_SIZE, getFontSize } from "../config";
 import { ASSET_PATHS } from "../assetpaths";
+import BootScene from "./BootScene";
 
 export default class LoadScene extends Phaser.Scene {
-	static scaleFactor: number = 1;
 	constructor() {
 		super(SCENES.LOAD);
 	}
-	init() {
-		this.scale.lockOrientation("portrait");
-		this.scale.on("resize", this.resize);
-		//this.resize();
-	}
+
 	preload() {
 		const width = this.game.canvas.width;
 		const height = this.game.canvas.height;
@@ -19,21 +15,38 @@ export default class LoadScene extends Phaser.Scene {
 		const graphics = this.add.graphics();
 
 		this.load.svg("button", ASSET_PATHS.SVGS.BUTTON, {
-			scale: LoadScene.scaleFactor,
+			scale: BootScene.scaleFactor,
 		});
 		this.load.svg("buttonwide", ASSET_PATHS.SVGS.BUTTONWIDE, {
-			scale: LoadScene.scaleFactor,
+			scale: BootScene.scaleFactor,
 		});
 		this.load.svg("circle", ASSET_PATHS.SVGS.CIRCLE, {
-			scale: LoadScene.scaleFactor,
+			scale: BootScene.scaleFactor,
 		});
 		this.load.svg("cross", ASSET_PATHS.SVGS.CROSS, {
-			scale: LoadScene.scaleFactor,
+			scale: BootScene.scaleFactor,
+		});
+		this.load.svg("hand", ASSET_PATHS.SVGS.HAND, {
+			scale: BootScene.scaleFactor,
+		});
+		this.load.svg("handtouched", ASSET_PATHS.SVGS.HANDTOUCHED, {
+			scale: BootScene.scaleFactor,
 		});
 
 		this.load.svg("uipanel", ASSET_PATHS.SVGS.PANEL, {
-			scale: LoadScene.scaleFactor,
+			scale: BootScene.scaleFactor,
 		});
+
+		//Sounds
+		this.load.audio("music", [ASSET_PATHS.SOUNDS.MUSIC]);
+		this.load.audio("normal", [
+			ASSET_PATHS.SOUNDS.NORMAL_MP3,
+			ASSET_PATHS.SOUNDS.NORMAL_OGG,
+		]);
+		this.load.audio("bonus", [
+			ASSET_PATHS.SOUNDS.BONUS_MP3,
+			ASSET_PATHS.SOUNDS.BONUS_OGG,
+		]);
 
 		const progressText = this.add
 			.text(
@@ -68,24 +81,4 @@ export default class LoadScene extends Phaser.Scene {
 	}
 
 	update() {}
-
-	resize() {
-		console.log("resize canvas");
-		let game_ratio = 360 / 640;
-
-		let div = document.getElementById("phaser-app");
-		div.style.width = window.innerHeight * game_ratio + "px";
-		div.style.height = window.innerHeight + "px";
-
-		let canvas = document.getElementsByTagName("canvas")[0];
-		let dpi_w = parseInt(div.style.width) / canvas.width;
-		let dpi_h = parseInt(div.style.height) / canvas.height;
-
-		let height = window.innerHeight * (dpi_w / dpi_h);
-		let width = height * game_ratio;
-
-		canvas.style.width = width + "px";
-		canvas.style.height = height + "px";
-		LoadScene.scaleFactor = width / 360;
-	}
 }
